@@ -1,0 +1,22 @@
+<div class="container">
+  <h2 mat-dialog-title>Editar Cliente</h2>
+
+  <mat-dialog-content>
+    <form>
+      <mat-form-field appearance="fill" style="display: block;">
+        <mat-label>Identificador</mat-label>
+        <input matInput [(ngModel)]="client.id" name="id" readonly placeholder="IDENTIFICADOR">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" style="display: block;">
+        <mat-label>Nombre...</mat-label>
+        <input matInput [(ngModel)]="client.name" name="name" required>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onClose()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+  </mat-dialog-actions>
+</div>
