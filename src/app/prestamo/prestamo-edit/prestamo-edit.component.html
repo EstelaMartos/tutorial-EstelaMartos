@@ -1,1 +1,55 @@
-<p>prestamo-edit works!</p>
+<h1 class="dialog-title">
+  {{ isEdit ? 'Editar' : 'Nuevo' }} préstamo
+</h1>
+
+<form class="dialog-form" novalidate>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Identificador</mat-label>
+    <input matInput [value]="prestamo.id ?? 'IDENTIFICADOR'" readonly>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Cliente</mat-label>
+    <mat-select [(ngModel)]="prestamo.clientId" name="client">
+      <mat-option *ngFor="let client of clients" [value]="client.id">
+        {{ client.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Juego</mat-label>
+    <mat-select [(ngModel)]="prestamo.gameId" name="game">
+      <mat-option *ngFor="let game of games" [value]="game.id">
+        {{ game.title }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="dates-row">
+    <mat-form-field appearance="outline">
+      <mat-label>Inicio</mat-label>
+      <input matInput [matDatepicker]="startDp" [(ngModel)]="prestamo.startDate" name="start" readonly>
+      <mat-datepicker-toggle matSuffix [for]="startDp"></mat-datepicker-toggle>
+      <mat-datepicker #startDp></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fin</mat-label>
+      <input matInput [matDatepicker]="endDp" [(ngModel)]="prestamo.endDate" name="end" readonly>
+      <mat-datepicker-toggle matSuffix [for]="endDp"></mat-datepicker-toggle>
+      <mat-datepicker #endDp></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+</form>
+
+<div class="dialog-actions">
+  <button mat-stroked-button color="primary" (click)="onClose()">
+    Cancelar
+  </button>
+  <button mat-flat-button color="primary" (click)="onSave()">
+    Guardar
+  </button>
+</div>

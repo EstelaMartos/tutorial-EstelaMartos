@@ -44,7 +44,7 @@ export class ClientEditComponent implements OnInit {
         this.dialogRef.close();
       },
       error: (err) => {
-        alert("Error al guardar: Verifique que el nombre no esté duplicado..");
+        alert("Error al guardar: Verifique que el nombre no esté duplicado.");
       }
     });
   }

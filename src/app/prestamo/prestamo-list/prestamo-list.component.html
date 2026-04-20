@@ -1,1 +1,125 @@
-<p>prestamo-list works!</p>
+<div class="container">
+
+  <h1>Gestión de préstamos</h1>
+
+  <div class="list-header">
+
+    <div class="filters">
+      <mat-form-field appearance="outline">
+        <mat-label>Juego</mat-label>
+        <mat-select [(ngModel)]="filters.gameId">
+          <mat-option value="">Todos</mat-option>
+          <mat-option *ngFor="let game of games" [value]="game.id">
+            {{ game.title }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Cliente</mat-label>
+        <mat-select [(ngModel)]="filters.clientId">
+          <mat-option value="">Todos</mat-option>
+          <mat-option *ngFor="let client of clients" [value]="client.id">
+            {{ client.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="filterDp"
+          [(ngModel)]="filters.date"
+          readonly>
+        <mat-datepicker-toggle matSuffix [for]="filterDp"></mat-datepicker-toggle>
+        <mat-datepicker #filterDp></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="list-buttons">
+      <button mat-stroked-button color="primary" (click)="clearFilters()">
+        Limpiar
+      </button>
+      <button mat-flat-button color="primary" (click)="filter()">
+        Filtrar
+      </button>
+    </div>
+
+  </div>
+
+  <mat-table [dataSource]="prestamos" class="mat-elevation-z1">
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID</mat-header-cell>
+      <mat-cell *matCellDef="let prestamo">
+        {{ prestamo.id }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="game">
+      <mat-header-cell *matHeaderCellDef> Juego</mat-header-cell>
+      <mat-cell *matCellDef="let prestamo">
+        {{ prestamo.gameTitle }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="client">
+      <mat-header-cell *matHeaderCellDef> Cliente</mat-header-cell>
+      <mat-cell *matCellDef="let prestamo">
+        {{ prestamo.clientName }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="start">
+      <mat-header-cell *matHeaderCellDef> Inicio</mat-header-cell>
+      <mat-cell *matCellDef="let prestamo">
+        {{ prestamo.startDate | date:'dd/MM/yyyy' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="end">
+      <mat-header-cell *matHeaderCellDef> Fin</mat-header-cell>
+      <mat-cell *matCellDef="let prestamo">
+        {{ prestamo.endDate | date:'dd/MM/yyyy' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let prestamo" class="actions">
+        <button mat-icon-button color="primary" (click)="editPrestamo(prestamo)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deletePrestamo(prestamo.id!)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="displayedColumns; sticky: true">
+    </mat-header-row>
+
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns">
+    </mat-row>
+
+  </mat-table>
+
+  <mat-paginator
+    [length]="totalElements"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+    (page)="loadPage($event)">
+  </mat-paginator>
+
+  <div class="buttons">
+    <button mat-flat-button color="primary" (click)="newPrestamo()">
+      Nuevo préstamo
+    </button>
+  </div>
+
+</div>
